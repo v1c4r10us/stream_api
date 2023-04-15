@@ -6,17 +6,7 @@ df_a=pd.read_csv('https://drive.google.com/uc?id=1WJfCKOAp2UhWfXEBSXHtiIe4ShBw48
 df_d=pd.read_csv('https://drive.google.com/uc?id=187comTc0dz1aqGLSXQ5gLzY70RALoRpJ')
 df_h=pd.read_csv('https://drive.google.com/uc?id=1z6v7Sx4wBkjEBSKz5cp2lMID2EYYIQY4')
 df_n=pd.read_csv('https://drive.google.com/uc?id=1eArA5pc0zGgn1w2ujBiKkf1hSEf1_Fjk')
-
-#Rating datasets
-df1=pd.read_csv('https://drive.google.com/uc?id=1RpQwvS0W8AqIsV8bP51iJzDwLSch_o1d')
-df2=pd.read_csv('https://drive.google.com/uc?id=1KELzh5ibLPv6J5OvFiCjCs3xBhtI2ILf')
-df3=pd.read_csv('https://drive.google.com/uc?id=1H-x_2SEIFHqtdrdev8jwBCzu28DKGNjO')
-df4=pd.read_csv('https://drive.google.com/uc?id=1Q9Yaf2O8pUn2_LQLSFYqPKn-iJBsJgog')
-df5=pd.read_csv('https://drive.google.com/uc?id=1-giwHEZExxJyaYIFls8POZBQ7VAa9luS')
-df6=pd.read_csv('https://drive.google.com/uc?id=1KdL6ZOalBpGcvqHf92l8omyGe_wib_Gx')
-df7=pd.read_csv('https://drive.google.com/uc?id=1xEAsohYePVW7oPm7mtQLXaPqW-PhBXZc')
-df8=pd.read_csv('https://drive.google.com/uc?id=1-kfhN2jPDGZVXOnswgUQa2031m3RUUiD')
-df_rate=[df1, df2, df3, df4, df5, df6, df7, df8]
+df_rate=pd.read_csv('https://drive.google.com/uc?id=1gziRE5Gr_KkxJS0js-6484-XAMwpexSo')
 
 #Functions
 def transform(input_dataframe, idx_char):
@@ -38,30 +28,30 @@ def transform(input_dataframe, idx_char):
     df['duration_type']=df.duration_type.str.lower()
     return df
 
-def transform_ratings():
-    for i in range(0,8):
-        df_rate[i].timestamp=df_rate[i].timestamp.apply(lambda x: datetime.fromtimestamp(x))
-        df_rate[i]['year']=df_rate[i].timestamp.apply(lambda x: x.year)
-        
+def get_resume_rating(platform):
+    platforms={'amazon':amazon, 'disney':disney, 'hulu': hulu, 'netflix':netflix} #Carga de datasets origen
+    dr=df_rate #Carga del dataset promedio de los 11M > 500K de registros en rating
+    dr=dr[['movieId', 'year', 'rating']] #Solo campos útiles
+    dr=dr[dr['movieId'].str.startswith(platform[0])] #Reduccion a la plataforma específica
+    dp=platforms[platform] #df de la plataforma
+    dr=dr.set_index('movieId').join(dp[['id', 'type']].set_index('id'))
+    dr=dr[dr['type']=='movie']
+    return dr
+
+#API Functions
 def get_max_duration(year, platform, duration_type):
     df=platform
     rows=df[(df['type']=='movie')&(df['release_year']==year)&(df['duration_type']==duration_type)].sort_values(by='duration_int')
-    if rows.shape[0]>0: 
-        resp=rows.iloc[0]['title'] 
-    else: 
+    if rows.shape[0]>0:
+        resp=rows.iloc[0]['title']
+    else:
         resp=None
     return resp
 
 def get_score_count(platform, scored, year):
-    platforms={'amazon':amazon, 'disney':disney, 'hulu': hulu, 'netflix':netflix}
     qty=0 #Qty of movies in platform with scored at year
-    for i in range(0,8):
-        rating_table=df_rate[i]
-        rating_table=rating_table[(rating_table['rating']>=scored)&(rating_table['year']==year)&(rating_table['movieId'].str[0]==platform[0])] #Filtering
-        rating_table=rating_table[['movieId']].drop_duplicates() #Getting ids without duplicates
-        rating_table=rating_table.set_index('movieId').join(platforms[platform][['id','type']].set_index('id')) #Getting type 
-        rating_table=rating_table[rating_table['type']=='movie'] #Classifing if it's a movie
-        qty=qty+rating_table.shape[0]
+    df=rates[platform] #Select platform dataframe
+    qty=df[(df['rating']>=scored)&(df['year']==year)].shape[0] #Count roww of movies with scored at year
     return qty
 
 def get_count_platform(platform):
@@ -95,10 +85,14 @@ def get_contents(rating):
     rows_n=netflix[netflix['rating']==rating].shape[0]
     return {rating: rows_a+rows_d+rows_h+rows_n}
 
-#Transformed datasets
+#Initializing datasets
 amazon=transform(df_a, 'a')
 disney=transform(df_d, 'd')
 hulu=transform(df_h, 'h')
 netflix=transform(df_n, 'n')
-transform_ratings()
 
+rate_a=get_resume_rating('amazon')
+rate_d=get_resume_rating('disney')
+rate_h=get_resume_rating('hulu')
+rate_n=get_resume_rating('netflix')
+rates={'amazon': rate_a, 'disney': rate_d, 'hulu': rate_h, 'netflix':rate_n}
