@@ -19,7 +19,7 @@ platforms={'amazon':elt.amazon, 'disney':elt.disney, 'hulu':elt.hulu, 'netflix':
 
 @app.get('/')
 def welcome():
-    return {'version': 'v1.0', 'published':'2023', 'author': 'Edgard Huanca Quispe', 'github':'@v1c4r10us', 'documentation':'https://streamapi-production.up.railway.app/docs'}
+    return {'version': 'v1.0', 'published':'2023', 'author': 'Edgard Huanca Quispe', 'github':'https://github.com/v1c4r10us/stream_api', 'documentation':'https://streamapi-production.up.railway.app/docs'}
 
 @app.get('/get_max_duration/{year}/{platform}/{duration_type}')
 def get_max_duration(year:int, platform:str, duration_type:str):
