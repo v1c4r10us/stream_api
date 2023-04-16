@@ -83,7 +83,7 @@ def get_contents(rating):
     rows_d=disney[disney['rating']==rating].shape[0]
     rows_h=hulu[hulu['rating']==rating].shape[0]
     rows_n=netflix[netflix['rating']==rating].shape[0]
-    return {'content_type':rating, 'content_quantity': rows_a+rows_d+rows_h+rows_n}
+    return {'rating_class':rating, 'quantity': rows_a+rows_d+rows_h+rows_n}
 
 #Initializing datasets
 amazon=transform(df_a, 'a')
