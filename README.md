@@ -58,28 +58,44 @@ Esta arquitectura describe el proceso realizado para el tratamiento de los datos
 
 
 
-**`Pelicula con mayor duracion`**:
-
-```curl
-
-HTTP GET: /get_max_duration/{anio}/{plataforma}/{dtype}
-
+**`Pelicula con mayor duracion`**
+```bash
+curl -X 'GET' \
+  'https://streamapi-production.up.railway.app/get_max_duration/{year}/{platform}/{duration_type}' \
+  -H 'accept: application/json'
 ```
 
-**`Cantidad de películas`**:
-
-```curl
-
-/get_score_count/{plataforma}/{scored}/{anio}
-
+**`Cantidad de películas por plataforma(con determinado 'score' y 'año')`**
+```bash
+curl -X 'GET' \
+  'https://streamapi-production.up.railway.app/get_score_count/{platorm}/{scored}/{year}' \
+  -H 'accept: application/json'
 ```
 
-**`Cantidad de películas`**:
-
-```curl
-
-/get_count_platform/{plataforma}/{scored}/{anio}
-
+**`Cantidad de películas por plataforma`**
+```bash
+curl -X 'GET' \
+  'https://streamapi-production.up.railway.app/get_count_platform/{platform}' \
+  -H 'accept: application/json'
 ```
 
+**`Actor con más apariciones(por plataforma y año)`**
+```bash
+curl -X 'GET' \
+  'https://streamapi-production.up.railway.app/get_actor/{platform}/{year}' \
+  -H 'accept: application/json'
+```
 
+**`Cantidad de contenidos(por pais y año)`**
+```bash
+curl -X 'GET' \
+  'https://streamapi-production.up.railway.app/prod_per_country/{content_type}/{country}/{year}' \
+  -H 'accept: application/json'
+```
+
+**`Cantidad de contenidos(por público clasificado)`**
+```bash
+curl -X 'GET' \
+  'https://streamapi-production.up.railway.app/get_contents/{rating_class}' \
+  -H 'accept: application/json'
+```

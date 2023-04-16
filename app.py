@@ -11,21 +11,22 @@ def get_max_duration(year:int, platform:str, duration_type:str):
 
 @app.get('/get_score_count/{platform}/{scored}/{year}')
 def get_score_count(platform:str, scored:float, year:int):
-    return {'total_movies':elt.get_score_count(platform, scored, year)}
+    return {'platform':platform, 'quantity':elt.get_score_count(platform, scored, year),'year':year, 'score':scored}
 
 @app.get('/get_count_platform/{platform}')
 def get_count_platform(platform:str):
-    return {'total_movies':elt.get_count_platform(platforms[platform])}
+    return {'platform':platform, 'movies':elt.get_count_platform(platforms[platform])}
 
 @app.get('/get_actor/{platform}/{year}')
 def get_actor(platform:str, year:int):
-    return {'actor': elt.get_actor(platforms[platform], year)}
+    resp=elt.get_actor(platforms[platform], year)
+    return {'platform':platform, 'year':year, 'actor': resp[0], 'appearances':resp[1]}
 
 @app.get('/prod_per_country/{content_type}/{country}/{year}')
 def prod_per_country(content_type:str, country:str, year:int):
     return elt.prod_per_country(content_type, country, year)
 
-@app.get('/get_contents/{rating}')
-def get_contents(rating:str):
+@app.get('/get_contents/{rating_class}')
+def get_contents(rating_class:str):
     return elt.get_contents(rating)
 

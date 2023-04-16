@@ -69,21 +69,21 @@ def get_actor(platform, year):
         m=max(actors_w_count, key=actors_w_count.get)
     else:
         m=None
-    return m
+    return m, actors_w_count[m]
 
 def prod_per_country(tipo,pais,anio):
     rows_a=amazon[(amazon['type']==tipo) & (amazon['release_year']==anio) & (amazon['country']==pais)].shape[0]
     rows_d=disney[(disney['type']==tipo) & (disney['release_year']==anio) & (disney['country']==pais)].shape[0]
     rows_h=hulu[(hulu['type']==tipo) & (hulu['release_year']==anio) & (hulu['country']==pais)].shape[0]
     rows_n=netflix[(netflix['type']==tipo) & (netflix['release_year']==anio) & (netflix['country']==pais)].shape[0]
-    return {'pais': pais, 'anio': anio, tipo:rows_a+rows_d+rows_h+rows_n}
+    return {'country': pais, 'year': anio, tipo:rows_a+rows_d+rows_h+rows_n}
 
 def get_contents(rating):
     rows_a=amazon[amazon['rating']==rating].shape[0]
     rows_d=disney[disney['rating']==rating].shape[0]
     rows_h=hulu[hulu['rating']==rating].shape[0]
     rows_n=netflix[netflix['rating']==rating].shape[0]
-    return {rating: rows_a+rows_d+rows_h+rows_n}
+    return {'content_type':rating, 'content_quantity': rows_a+rows_d+rows_h+rows_n}
 
 #Initializing datasets
 amazon=transform(df_a, 'a')
