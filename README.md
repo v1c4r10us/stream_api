@@ -56,8 +56,6 @@ Esta arquitectura describe el proceso realizado para el tratamiento de los datos
 
 ## Endpoints
 
-
-
 **`Pelicula con mayor duracion`**
 ```bash
 curl -X 'GET' \
@@ -99,3 +97,7 @@ curl -X 'GET' \
   'https://streamapi-production.up.railway.app/get_contents/{rating_class}' \
   -H 'accept: application/json'
 ```
+
+## Deployment
+
+Si desea visualizar el despliegue en producción pulsar <a href=https://streamapi-production.up.railway.app/> AQUÍ</a>

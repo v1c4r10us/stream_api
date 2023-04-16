@@ -2,8 +2,24 @@ from fastapi import FastAPI
 import interface as elt
 import json
 
-app=FastAPI()
+app=FastAPI(
+                title="StreamAPI",
+                version="1.0",
+                contact={
+                            "name": "v1c4r10us",
+                            "email": "v1c4r10us.29@gmail.com",
+                },
+                license_info={
+                            "name": "Apache 2.0",
+                            "url": "https://www.apache.org/licenses/LICENSE-2.0.html",
+                }
+            )
+
 platforms={'amazon':elt.amazon, 'disney':elt.disney, 'hulu':elt.hulu, 'netflix':elt.netflix}
+
+@app.get('/')
+def welcome():
+    return {'version': 'v1.0', 'published':'2023', 'author': 'Edgard Huanca Quispe', 'github':'@v1c4r10us', 'documentation':'https://streamapi-production.up.railway.app/docs'}
 
 @app.get('/get_max_duration/{year}/{platform}/{duration_type}')
 def get_max_duration(year:int, platform:str, duration_type:str):
