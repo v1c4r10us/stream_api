@@ -28,5 +28,5 @@ def prod_per_country(content_type:str, country:str, year:int):
 
 @app.get('/get_contents/{rating_class}')
 def get_contents(rating_class:str):
-    return elt.get_contents(rating)
+    return elt.get_contents(rating_class)
 
