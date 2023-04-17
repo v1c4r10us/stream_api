@@ -48,4 +48,4 @@ def get_contents(rating_class:str):
 
 @app.get('/get_recommendations/{title}')
 def get_recommendations(title:str):
-    return elt.all_recommendations[title]
+    return {'recommendations': elt.all_recommendations[title]}
