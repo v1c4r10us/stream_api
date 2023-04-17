@@ -1,7 +1,6 @@
 import pandas as pd
+import pickle
 from datetime import datetime
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 
 #Streaming Datasets
 df_a=pd.read_csv('datasets/amazon_prime_titles.csv')
@@ -9,7 +8,6 @@ df_d=pd.read_csv('datasets/disney_plus_titles.csv')
 df_h=pd.read_csv('datasets/hulu_titles.csv')
 df_n=pd.read_csv('datasets/netflix_titles.csv')
 df_rate=pd.read_csv('ratings/rating_global.csv')
-df_rate2=pd.read_csv('ratings/recsys.csv')
 
 #Functions
 def transform(input_dataframe, idx_char):
@@ -88,28 +86,6 @@ def get_contents(rating):
     rows_n=netflix[netflix['rating']==rating].shape[0]
     return {'rating_class':rating, 'quantity': rows_a+rows_d+rows_h+rows_n}
 
-#Recommendation model
-def get_base_recsys():
-    platforms=pd.concat([amazon, disney, hulu, netflix]) #Union de todas las plataformas
-    platforms=platforms[['id', 'type', 'title','rating', 'listed_in']] #Extracción de los campos necesarios
-    dsc=df_rate2[['movieId', 'rating']] #Limpieza df_rate2
-    dsc=dsc.rename(columns={'rating':'mean_scored'}) #Renombrar y obtener mean_scored
-    platforms=platforms.set_index('id').join(dsc.set_index('movieId')) #Joining df
-    platforms['mean_scored']=platforms['mean_scored'].round(2) #Round mean_scored
-    platforms['mean_scored']=platforms['mean_scored'].values.astype('str') #Convertir mean_score as str for added as tag
-    platforms=platforms.reset_index() #Resetting indexes
-    titles_wo_duplicates=platforms['title'].drop_duplicates() #Dropping duplicates titles
-    platforms=platforms.iloc[titles_wo_duplicates.index] #Regenerating platforms
-    platforms['tags']=platforms['type']+', '+platforms['rating']+', '+platforms['listed_in']+', '+platforms['mean_scored']
-    platforms=platforms[['type', 'title', 'rating', 'listed_in', 'mean_scored', 'tags']].reset_index()
-    platforms=platforms[['type', 'title', 'rating', 'listed_in', 'mean_scored', 'tags']] #Df base
-    #Matrix of key words + frequency
-    tfidf=TfidfVectorizer() #Vectorization
-    tfidf_matrix=tfidf.fit_transform(platforms['tags']) #Matrix
-    #Apply cosine similarity
-    cos_sim=cosine_similarity(tfidf_matrix, tfidf_matrix)
-    return platforms, cos_sim
-
 #Initializing datasets
 amazon=transform(df_a, 'a')
 disney=transform(df_d, 'd')
@@ -122,13 +98,6 @@ rate_h=get_resume_rating('hulu')
 rate_n=get_resume_rating('netflix')
 rates={'amazon': rate_a, 'disney': rate_d, 'hulu': rate_h, 'netflix':rate_n}
 
-#API function for recommendation
-base=get_base_recsys() #Initializing base for recommendation model
-def get_recommendation(title, platforms=base[0], cos_sim=base[1]):
-    indexes=pd.Series(platforms.index, index=platforms['title']) #Serie with titles as index
-    idx=indexes[title] #Index of title to evaluate
-    sim_scores=list(enumerate(cos_sim[idx]))
-    sim_scores=sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores=sim_scores[1:6]
-    rec_indexes=[i[0] for i in sim_scores]
-    return list(platforms['title'].iloc[rec_indexes])
+all_recommendations={}
+with open('all_recommendations.pkl', 'r') as f:
+    all_recommendations=pickle.load(f) #All Recomendations dumping
