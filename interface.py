@@ -9,7 +9,7 @@ df_d=pd.read_csv('https://drive.google.com/uc?id=187comTc0dz1aqGLSXQ5gLzY70RALoR
 df_h=pd.read_csv('https://drive.google.com/uc?id=1z6v7Sx4wBkjEBSKz5cp2lMID2EYYIQY4')
 df_n=pd.read_csv('https://drive.google.com/uc?id=1eArA5pc0zGgn1w2ujBiKkf1hSEf1_Fjk')
 df_rate=pd.read_csv('https://drive.google.com/uc?id=1gziRE5Gr_KkxJS0js-6484-XAMwpexSo')
-df_rate2=pd.read_csv('https://drive.google.com/uc?=10SoH2OTnx1lGd-WXTmUDH6HBDjtFhSqR')
+df_rate2=pd.read_csv('https://drive.google.com/uc?id=10SoH2OTnx1lGd-WXTmUDH6HBDjtFhSqR')
 
 #Functions
 def transform(input_dataframe, idx_char):
