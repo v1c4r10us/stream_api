@@ -99,5 +99,5 @@ rate_n=get_resume_rating('netflix')
 rates={'amazon': rate_a, 'disney': rate_d, 'hulu': rate_h, 'netflix':rate_n}
 
 all_recommendations={}
-with open('all_recommendations.pkl', 'r') as f:
+with open('all_recommendations.pkl', 'rb') as f:
     all_recommendations=pickle.load(f) #All Recomendations dumping
