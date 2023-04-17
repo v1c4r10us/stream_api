@@ -46,3 +46,6 @@ def prod_per_country(content_type:str, country:str, year:int):
 def get_contents(rating_class:str):
     return elt.get_contents(rating_class)
 
+@app.get('/get_recommendation/{title}')
+def get_recommendation(title:str):
+    return {'recommendation': elt.get_recommendation(title)}
