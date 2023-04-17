@@ -4,12 +4,12 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 #Streaming Datasets
-df_a=pd.read_csv('https://drive.google.com/uc?id=1WJfCKOAp2UhWfXEBSXHtiIe4ShBw48pB')
-df_d=pd.read_csv('https://drive.google.com/uc?id=187comTc0dz1aqGLSXQ5gLzY70RALoRpJ')
-df_h=pd.read_csv('https://drive.google.com/uc?id=1z6v7Sx4wBkjEBSKz5cp2lMID2EYYIQY4')
-df_n=pd.read_csv('https://drive.google.com/uc?id=1eArA5pc0zGgn1w2ujBiKkf1hSEf1_Fjk')
-df_rate=pd.read_csv('https://drive.google.com/uc?id=1gziRE5Gr_KkxJS0js-6484-XAMwpexSo')
-df_rate2=pd.read_csv('https://drive.google.com/uc?id=10SoH2OTnx1lGd-WXTmUDH6HBDjtFhSqR')
+df_a=pd.read_csv('datasets/amazon_prime_titles.csv')
+df_d=pd.read_csv('datasets/disney_plus_titles.csv')
+df_h=pd.read_csv('datasets/hulu_titles.csv')
+df_n=pd.read_csv('datasets/netflix_titles.csv')
+df_rate=pd.read_csv('ratings/rating_global.csv')
+df_rate2=pd.read_csv('ratings/recsys.csv')
 
 #Functions
 def transform(input_dataframe, idx_char):
