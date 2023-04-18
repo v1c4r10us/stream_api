@@ -108,3 +108,7 @@ curl -X 'GET' \
 ## Deployment
 
 <a href=https://streamapi-production.up.railway.app/> AQUÍ</a> se visualiza el deployment de la API Rest.
+
+## Video demo
+
+Enlace a el video demostrativo <a href=https://youtu.be/LE3QT_eFeEM>AQUÍ</a>
