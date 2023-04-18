@@ -42,7 +42,7 @@ def get_resume_rating(platform):
 #API Functions
 def get_max_duration(year, platform, duration_type):
     df=platform
-    rows=df[(df['type']=='movie')&(df['release_year']==year)&(df['duration_type']==duration_type)].sort_values(by='duration_int')
+    rows=df[(df['type']=='movie')&(df['release_year']==year)&(df['duration_type']==duration_type)].sort_values(by='duration_int', ascending=False)
     if rows.shape[0]>0:
         resp=rows.iloc[0]['title']
     else:
