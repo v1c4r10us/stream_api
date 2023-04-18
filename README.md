@@ -35,9 +35,9 @@ Los datos de películas de las 04 plataformas se procesan directamente en el lad
 
 ## EDA (Exploratory Data Analysis)
 
-+ En base al registro de **ratings** es posible realizar un análisis exploratorio por cada pelicula (global o por cada año), ambas formas fueron requeridas. El resultado se puede ver Aquí.
++ En base al registro de **ratings** es posible realizar un análisis exploratorio por cada pelicula (global o por cada año), ambas formas fueron requeridas. El resultado se puede ver <a href=https://github.com/v1c4r10us/stream_api/blob/main/ratings/EDA.ipynb>Aquí</a>.
 
-+ Para el caso del modelo de recomendación debido a los recursos de disposición libre de la plataforma de despliegue, se ha optado por generar un objeto serializable (.pkl) con la libreria **pickle** de python en donde se realiza el volcado de las recomendaciones para todos los títulos de películas generando alredor de 22K claves 'title', ello puede revisarse Aquí.
++ Para el caso del modelo de recomendación debido a los recursos de disposición libre de la plataforma de despliegue, se ha optado por generar un objeto serializable (.pkl) con la libreria **pickle** de python en donde se realiza el volcado de las recomendaciones para todos los títulos de películas generando alredor de 22K claves 'title', ello puede revisarse <a href=https://github.com/v1c4r10us/stream_api/blob/main/datasets/model.ipynb>Aquí</a>.
 
 ## Herramientas utilizadas
 
