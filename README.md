@@ -28,21 +28,22 @@ Disponemos de los datos de peliculas y series de las 04 principales plataformas 
 
 ## Arquitectura
 
+Los datos de películas de las 04 plataformas se procesan directamente en el lado del servidor; sin embargo para el caso de los ficheros rating, que en total suman alrededor de 11M de registros, procesarlos en su totalidad en el lado del servidor demandaría consumo excesivo de **memoria ram** (más de lo que se proporciona de forma gratuita). Para solucionar este inconveniente y mediante el **EDA**, se sintetiza en 02 nuevos ficheros: *rating_global.csv* (para el request en GET_SCORE_COUNT) y *recsys.csv* (para el request en GET_RECOMMENDATION). El siguiente diagrama representa la arquitectura hasta su despliegue en <a href=https://railway.app/>Railway</a>:
 
 
- <p align=center><img src=https://lh3.googleusercontent.com/drive-viewer/AAOQEOSoO4yhBDiT6_7J33K-aMExYdvDinKR7ZYnO5R_RaCkbcFI-GVcZebbEiImS3bvDhcJob1krNHTbT1Wj4FQ3foJAMotAw=s2560><p>
+<a href="https://lh3.googleusercontent.com/drive-viewer/AAOQEOT4kxHDWopLM2vkqgESRgJB7M2FAgCuvMTsiHuzAEq1plXzq9zhb-Gl90BtbZgeMYkzBkbZ610IrtS612XJFcFCYvo_Og=s1600?source=screenshot.guru"> <img src="https://lh3.googleusercontent.com/drive-viewer/AAOQEOT4kxHDWopLM2vkqgESRgJB7M2FAgCuvMTsiHuzAEq1plXzq9zhb-Gl90BtbZgeMYkzBkbZ610IrtS612XJFcFCYvo_Og=s1600" /> </a>
 
+## EDA (Exploratory Data Analysis)
 
++ En base al registro de **ratings** es posible realizar un análisis exploratorio por cada pelicula (global o por cada año), ambas formas fueron requeridas. El resultado se puede ver Aquí.
 
-Esta arquitectura describe el proceso realizado para el tratamiento de los datos así como el despliegue en <a href=https://railway.app/>Railway</a>
-
-
++ Para el caso del modelo de recomendación debido a los recursos de disposición libre de la plataforma de despliegue, se ha optado por generar un objeto serializable (.pkl) con la libreria **pickle** de python en donde se realiza el volcado de las recomendaciones para todos los títulos de películas generando alredor de 22K claves 'title', ello puede revisarse Aquí.
 
 ## Herramientas utilizadas
 
 
 
-+ Python 3.8: Pandas, scikitLearn
++ Python 3.8: Pandas, scikitLearn, pickle
 
 + <a href=https://fastapi.tiangolo.com/>FastAPI</a>
 
@@ -98,6 +99,12 @@ curl -X 'GET' \
   -H 'accept: application/json'
 ```
 
+**`Obtener recomendación en base a un título`**
+```bash
+curl -X 'GET' \
+  'https://streamapi-production.up.railway.app/get_recommendations/{title}' \
+  -H 'accept: application/json'
+```
 ## Deployment
 
-Si desea visualizar el despliegue en producción pulsar <a href=https://streamapi-production.up.railway.app/> AQUÍ</a>
+<a href=https://streamapi-production.up.railway.app/> AQUÍ</a> se visualiza el deployment de la API Rest.
