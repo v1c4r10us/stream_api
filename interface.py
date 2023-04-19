@@ -27,16 +27,9 @@ def transform(input_dataframe, idx_char):
     df['listed_in']=df.listed_in.str.lower()
     df['description']=df.description.str.lower()
     df['duration_type']=df.duration_type.str.lower()
-
-<<<<<<< HEAD
     df['duration_int']=df['duration_int'].fillna(0) #Filling nan
     df['duration_int']=df['duration_int'].astype(int) #For convert to int
     df[df['duration_type']=='seasons']='season' #seasons ---> season
-=======
-    df['duration_int']=df['duration_int'].fillna(0)
-    df['duration_int']=df['duration_int'].astype(int)
-    df[df['duration_type']=='seasons']='season'
->>>>>>> 6d9f2ed459a282ef1cbb57689765bc842ce39718
     return df
 
 def get_resume_rating(platform):
