@@ -27,6 +27,10 @@ def transform(input_dataframe, idx_char):
     df['listed_in']=df.listed_in.str.lower()
     df['description']=df.description.str.lower()
     df['duration_type']=df.duration_type.str.lower()
+
+    df['duration_int']=df['duration_int'].fillna(0) #Filling nan
+    df['duration_int']=df['duration_int'].astype(int) #For convert to int
+    df[df['duration_type']=='seasons']='season' #seasons ---> season
     return df
 
 def get_resume_rating(platform):
@@ -42,7 +46,7 @@ def get_resume_rating(platform):
 #API Functions
 def get_max_duration(year, platform, duration_type):
     df=platform
-    rows=df[(df['type']=='movie')&(df['release_year']==year)&(df['duration_type']==duration_type)].sort_values(by='duration_int')
+    rows=df[(df['type']=='movie')&(df['release_year']==year)&(df['duration_type']==duration_type)].sort_values(by='duration_int', ascending=False)
     if rows.shape[0]>0:
         resp=rows.iloc[0]['title']
     else:
