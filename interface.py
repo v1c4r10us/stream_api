@@ -27,6 +27,10 @@ def transform(input_dataframe, idx_char):
     df['listed_in']=df.listed_in.str.lower()
     df['description']=df.description.str.lower()
     df['duration_type']=df.duration_type.str.lower()
+
+    df['duration_int']=df['duration_int'].fillna(0)
+    df['duration_int']=df['duration_int'].astype(int)
+    df[df['duration_type']=='seasons']='season'
     return df
 
 def get_resume_rating(platform):
