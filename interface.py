@@ -80,7 +80,7 @@ def prod_per_country(tipo,pais,anio):
     rows_d=disney[(disney['type']==tipo) & (disney['release_year']==anio) & (disney['country'].str.contains(pais))].shape[0]
     rows_h=hulu[(hulu['type']==tipo) & (hulu['release_year']==anio) & (hulu['country'].str.contains(pais))].shape[0]
     rows_n=netflix[(netflix['type']==tipo) & (netflix['release_year']==anio) & (netflix['country'].str.contains(pais))].shape[0]
-    return {'country': pais, 'year': anio, tipo:rows_a+rows_d+rows_h+rows_n}
+    return {'country': pais, 'year': anio, tipo+'s':rows_a+rows_d+rows_h+rows_n}
 
 def get_contents(rating):
     rows_a=amazon[amazon['rating']==rating].shape[0]
