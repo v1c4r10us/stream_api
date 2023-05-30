@@ -31,7 +31,7 @@ Disponemos de los datos de peliculas y series de las 04 principales plataformas 
 Los datos de películas de las 04 plataformas se procesan directamente en el lado del servidor; sin embargo para el caso de los ficheros rating, que en total suman alrededor de 11M de registros, procesarlos en su totalidad en el lado del servidor demandaría consumo excesivo de **memoria ram** (más de lo que se proporciona de forma gratuita). Para solucionar este inconveniente y mediante el **EDA**, se sintetiza en 02 nuevos ficheros: *rating_global.csv* (para el request en GET_SCORE_COUNT) y *recsys.csv* (para el request en GET_RECOMMENDATION). El siguiente diagrama representa la arquitectura hasta su despliegue en <a href=https://railway.app/>Railway</a>:
 
 
-<a href="https://lh3.googleusercontent.com/drive-viewer/AAOQEOT4kxHDWopLM2vkqgESRgJB7M2FAgCuvMTsiHuzAEq1plXzq9zhb-Gl90BtbZgeMYkzBkbZ610IrtS612XJFcFCYvo_Og=s1600?source=screenshot.guru"> <img src="https://lh3.googleusercontent.com/drive-viewer/AAOQEOT4kxHDWopLM2vkqgESRgJB7M2FAgCuvMTsiHuzAEq1plXzq9zhb-Gl90BtbZgeMYkzBkbZ610IrtS612XJFcFCYvo_Og=s1600" /> </a>
+<a href="https://lh3.googleusercontent.com/drive-viewer/AFGJ81r9AnNSb2JlrUtHTWfPREkNbWLScheX-iuHBNoK4ypYVQ_lm-JYNzMrj9KZo2xbeegd5auq3-g4QYy7n4e0Y-KmtquZ9A=s1600?source=screenshot.guru"> <img src="https://lh3.googleusercontent.com/drive-viewer/AFGJ81r9AnNSb2JlrUtHTWfPREkNbWLScheX-iuHBNoK4ypYVQ_lm-JYNzMrj9KZo2xbeegd5auq3-g4QYy7n4e0Y-KmtquZ9A=s1600" /> </a>
 
 ## EDA (Exploratory Data Analysis)
 
